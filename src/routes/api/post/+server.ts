@@ -11,9 +11,16 @@ export const config = {
   runtime: "nodejs20.x",
 };
 
-export async function PUT({ request, getClientAddress }) {
+export async function PUT({ request, getClientAddress, url }) {
   if (parseInt(request.headers.get("Content-Length") || "0") > 100000000)
     return error(400, { message: "Body too large" });
+
+  const params = url.searchParams;
+
+  const length = parseInt(params.get("length") || "7");
+
+  if (length > 50) return error(400, { message: "Length too large" });
+  else if (length < 7) return error(400, { message: "Length too small" });
 
   const body = await request.text();
 
@@ -25,7 +32,7 @@ export async function PUT({ request, getClientAddress }) {
 
   if (size > 100000000) return error(400, { message: "Body too large" });
 
-  const id = nanoid();
+  const id = nanoid(length);
 
   await s3.send(
     new PutObjectCommand({
