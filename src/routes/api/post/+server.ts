@@ -11,11 +11,18 @@ export const config = {
 };
 
 export async function PUT({ request, getClientAddress }) {
+  if (parseInt(request.headers.get("Content-Length") || "0") > 100000000)
+    return error(400, { message: "Body too large" });
+
   const body = await request.text();
 
   if (!body) {
     return error(404, { message: "Missing body" });
   }
+
+  const size = Buffer.from(body).byteLength;
+
+  if (size > 100000000) return error(400, { message: "Body too large" });
 
   const id = nanoid();
 
@@ -31,7 +38,7 @@ export async function PUT({ request, getClientAddress }) {
   await db.insert(pastesTable).values({
     createdAt: Date.now(),
     id,
-    size: Buffer.from(body).byteLength,
+    size,
     createdByIp: getClientAddress(),
     createdByUserAgent: request.headers.get("user-agent"),
   });
