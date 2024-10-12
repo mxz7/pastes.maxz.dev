@@ -5,7 +5,7 @@ import { error } from "console";
 import { eq } from "drizzle-orm";
 
 export async function load({ params, setHeaders, fetch }) {
-  setHeaders({ "cache-control": "max-age=86400" });
+  setHeaders({ "cache-control": "public, max-age=3600, must-revalidate" });
 
   const [data] = await db.select().from(pastesTable).where(eq(pastesTable.id, params.id));
 

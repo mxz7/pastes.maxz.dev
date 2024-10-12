@@ -7,7 +7,7 @@ export function handleError({ event, error, message, status }) {
   event.locals.errorStackTrace = (error as Error)?.stack || undefined;
   event.locals.errorId = errorId;
 
-  log(status, event);
+  if (process.env.BUILDING != "true") log(status, event);
 
   return { message: message || "an unexpected error occured", errorId: errorId };
 }
@@ -20,7 +20,7 @@ export async function handle({ event, resolve }) {
 
   const res = await resolve(event);
 
-  log(res.status, event);
+  if (process.env.BUILDING != "true") log(res.status, event);
 
   return res;
 }
