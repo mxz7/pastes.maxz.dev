@@ -1,6 +1,7 @@
 import { env } from "$env/dynamic/private";
 import { nanoid } from "$lib/nanoid.js";
 import db from "$lib/server/db/index.js";
+import { purge } from "$lib/server/db/purge.js";
 import { pastesTable } from "$lib/server/db/schema.js";
 import s3 from "$lib/server/s3.js";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
@@ -42,6 +43,8 @@ export async function PUT({ request, getClientAddress }) {
     createdByIp: getClientAddress(),
     createdByUserAgent: request.headers.get("user-agent"),
   });
+
+  purge();
 
   return json({
     id,
