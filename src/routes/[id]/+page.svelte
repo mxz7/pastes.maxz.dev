@@ -13,6 +13,12 @@
   });
 </script>
 
-<p class="overflow-x-scroll whitespace-pre">
-  {data.content}
-</p>
+{#await data.content}
+  <div class="flex w-full justify-center">
+    <span class="loading loading-spinner loading-lg text-primary"></span>
+  </div>
+{:then content}
+  <p class="overflow-x-scroll whitespace-pre">
+    {content}
+  </p>
+{/await}

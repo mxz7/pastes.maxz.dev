@@ -18,7 +18,7 @@ export async function load({ params, setHeaders, fetch }) {
   }
 
   return {
-    content: await fetch(`https://cdn.maxz.dev/pastes/${data.id}`).then((r) => r.text()),
+    content: fetch(`https://cdn.maxz.dev/pastes/${data.id}`).then((r) => r.text()),
     createdAt: data.createdAt,
     size: data.size,
   };
