@@ -1,4 +1,4 @@
-import { S3_BUCKET } from "$env/static/private";
+import { env } from "$env/dynamic/private";
 import { nanoid } from "$lib/nanoid.js";
 import db from "$lib/server/db/index.js";
 import { pastesTable } from "$lib/server/db/schema.js";
@@ -21,7 +21,7 @@ export async function PUT({ request, getClientAddress }) {
 
   await s3.send(
     new PutObjectCommand({
-      Bucket: S3_BUCKET,
+      Bucket: env.S3_BUCKET,
       Key: `pastes/${id}`,
       Body: body,
       ContentType: "text/plain",
