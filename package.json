@@ -15,7 +15,7 @@
 		"@catppuccin/daisyui": "^1.1.2",
 		"@flydotio/dockerfile": "^0.5.9",
 		"@sveltejs/adapter-node": "^5.2.6",
-		"@sveltejs/kit": "^2.0.0",
+		"@sveltejs/kit": "^2.8.3",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0-next.6",
 		"@types/node": "^22.7.5",
 		"autoprefixer": "^10.4.20",
